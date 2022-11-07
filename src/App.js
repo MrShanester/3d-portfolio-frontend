@@ -2,6 +2,10 @@ import { useEffect } from "react";
 // Removed logo since we don't need it anymore
 import * as THREE from "three";
 
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
+
+import Stats from "three/examples/jsm/libs/stats.module";
+
 function App() {
   useEffect(() => {
     const scene = new THREE.Scene();
@@ -25,14 +29,25 @@ function App() {
     spotLight.position.set(0, 64, 32);
     scene.add(spotLight);
 
+    // Add Box
     const boxGeometry = new THREE.BoxGeometry(16, 16, 16);
     const boxMaterial = new THREE.MeshNormalMaterial();
     const boxMesh = new THREE.Mesh(boxGeometry, boxMaterial);
     scene.add(boxMesh);
 
+    // Add Orbit Controls
+    const controls = new OrbitControls(camera, renderer.domElement);
+
+    // Add FPS stats
+    const stats = Stats();
+    document.body.appendChild(stats.dom);
+
+    // Animate Scene
     const animate = () => {
       boxMesh.rotation.x += 0.01;
       boxMesh.rotation.y += 0.01;
+      stats.update();
+      controls.update();
       renderer.render(scene, camera);
       window.requestAnimationFrame(animate);
     };

@@ -31,6 +31,8 @@ function App() {
     scene.add(boxMesh);
 
     const animate = () => {
+      boxMesh.rotation.x += 0.01;
+      boxMesh.rotation.y += 0.01;
       renderer.render(scene, camera);
       window.requestAnimationFrame(animate);
     };
@@ -39,7 +41,7 @@ function App() {
 
   return (
     <div>
-      <p> Hello World</p>
+      <canvas id="myThreeJsCanvas" />
     </div>
   );
 }
